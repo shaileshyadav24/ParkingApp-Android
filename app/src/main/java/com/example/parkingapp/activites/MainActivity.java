@@ -1,8 +1,10 @@
-package com.example.parkingapp;
+package com.example.parkingapp.activites;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.parkingapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
