@@ -28,7 +28,6 @@ public class UserRepository {
     }
 
     public void addUser(final User user, String password) {
-        this.statusOfRegistration.postValue("LOADING");
         try {
             mAuth.createUserWithEmailAndPassword(user.getEmail(), password)
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -42,14 +41,14 @@ public class UserRepository {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d(TAG, "Failure adding into Authentication");
-                            statusOfRegistration.postValue("FAILURE");
+                            statusOfRegistration.postValue(e.getLocalizedMessage());
                         }
                     });
 
         } catch (Exception ex) {
             Log.e(TAG, ex.toString());
             Log.e(TAG, ex.getLocalizedMessage());
-            statusOfRegistration.postValue("FAILURE");
+            statusOfRegistration.postValue(ex.getLocalizedMessage());
         }
     }
 
@@ -68,14 +67,14 @@ public class UserRepository {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.e(TAG, "Error adding document to the store " + e);
-                            statusOfRegistration.postValue("FAILURE");
+                            statusOfRegistration.postValue(e.getLocalizedMessage());
                         }
                     });
 
         } catch (Exception ex) {
             Log.e(TAG, ex.toString());
             Log.e(TAG, ex.getLocalizedMessage());
-            statusOfRegistration.postValue("FAILURE");
+            statusOfRegistration.postValue(ex.getLocalizedMessage());
         }
     }
 

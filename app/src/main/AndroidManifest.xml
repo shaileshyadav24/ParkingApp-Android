@@ -14,13 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activites.DashboardActivity"></activity>
-        <activity android:name=".activites.RegistrationActivity" />
-        <activity android:name=".activites.LoginActivity">
+        <activity android:name=".activites.RegistrationActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".activites.LoginActivity">
         </activity>
         <activity android:name=".activites.MainActivity">
 

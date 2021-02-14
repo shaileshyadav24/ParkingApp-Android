@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1097906221071",
+    "project_id": "parkingapp-ffce5",
+    "storage_bucket": "parkingapp-ffce5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097906221071:android:209305caeb497c3481f37a",
+        "android_client_info": {
+          "package_name": "com.example.parkingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1097906221071-n8urmtr8mfljmfjc3r5rqp22cjg8dats.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.parkingapp",
+            "certificate_hash": "dacb4d5803a994e251e46cbe0e163051b298e971"
+          }
+        },
+        {
+          "client_id": "1097906221071-22tp2na72heflentupqmsv0ecf7eabll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGfuq75uRxcjYILBpClYjbRp-V1h32tYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1097906221071-22tp2na72heflentupqmsv0ecf7eabll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

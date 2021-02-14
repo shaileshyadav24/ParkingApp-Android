@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".activites.RegistrationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingTop="15dp"
+            android:id="@+id/returnToLogin"
+            android:src="@drawable/baseline_keyboard_arrow_left_black_18dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="Registration"
+            android:textSize="30dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:textColor="#000" />
+
+    <EditText
+        android:id="@+id/registerName"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginBottom="10dp"
+        android:hint="Please enter your name"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:textColor="#000" />
+
+    <EditText
+        android:id="@+id/registerEmail"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginBottom="10dp"
+        android:hint="Please enter your email address"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password :"
+        android:textColor="#000" />
+
+    <EditText
+        android:id="@+id/registerPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginBottom="10dp"
+        android:hint="Please enter your password"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm Password :"
+        android:textColor="#000" />
+
+    <EditText
+        android:id="@+id/registerCPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginBottom="10dp"
+        android:hint="Please confirm your password"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Phone number:"
+        android:textColor="#000" />
+
+    <EditText
+        android:id="@+id/registerPhone"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginBottom="10dp"
+        android:hint="Please enter your phone number"
+        android:inputType="number" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Plate number:"
+        android:textColor="#000" />
+
+    <EditText
+        android:id="@+id/registerPlateNo"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginBottom="10dp"
+        android:hint="Please enter your car plate number"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="#F30707"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/registerUser"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="#A4F2A4"
+        android:text="Register"
+        android:textColor="#fff"
+        android:textSize="25dp" />
+
+
+    <!--    <Button-->
+    <!--        android:id="@+id/returnToLogin"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="40dp"-->
+    <!--        android:layout_marginTop="15dp"-->
+    <!--        android:background="#FF8C00"-->
+    <!--        android:text="Return to login"-->
+    <!--        android:textColor="#fff"-->
+    <!--        android:textSize="25dp" />-->
+
+
+</LinearLayout>
