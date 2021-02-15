@@ -5,4 +5,8 @@
     <string name="remember_me">Remember me?</string>
     <string name="password">Password</string>
     <string name="username">Email Address</string>
+    <string name="title_activity_home_page">MainActivity</string>
+    <string name="title_home">Saved Parking</string>
+    <string name="title_dashboard">Add Parking</string>
+    <string name="title_notifications">Profile</string>
 </resources>

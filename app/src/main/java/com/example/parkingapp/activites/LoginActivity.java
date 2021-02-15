@@ -23,7 +23,6 @@ import static android.view.View.GONE;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final String TAG = this.getClass().getCanonicalName();
-    public static final String MyPREFERENCES = "EMAILADDRESS" ;
     SharedPreferences sharedpreferences;
 
     private EditText emailAddress;
@@ -39,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedpreferences = getApplicationContext().getSharedPreferences("REMEMBER_ME", MODE_PRIVATE);
 
         this.userViewModel = UserViewModel.getInstance();
 
@@ -70,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("email", emailAddress.getText().toString());
         }
-        Intent makeIntent = new Intent(this, DashboardActivity.class);
+        Intent makeIntent = new Intent(this, HomePageActivity.class);
         makeIntent.putExtra("email", emailAddress.getText().toString());
         startActivity(makeIntent);
     }

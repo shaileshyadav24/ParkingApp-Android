@@ -26,4 +26,8 @@ public class UserViewModel {
     public void validateUser(String email, String password) {
         userRepository.isValidUser(email, password);
     }
+
+    public void searchUserByEmail(String email) {
+        userRepository.getUser(email);
+    }
 }

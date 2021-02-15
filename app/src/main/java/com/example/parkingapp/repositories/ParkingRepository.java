@@ -1,9 +1,89 @@
 package com.example.parkingapp.repositories;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.parkingapp.model.Parking;
+import com.example.parkingapp.model.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ParkingRepository {
+    private final String TAG = this.getClass().getCanonicalName();
+    private final String COLLECTION_NAME = "users";
+    private final String COLLECTION_PARKING = "parking";
+    private final FirebaseFirestore db;
+
+
+    public ParkingRepository() {
+        this.db = FirebaseFirestore.getInstance();
+    }
+
+
+    public void addParkingToUser(String id, Parking parking) {
+        try {
+            db.collection(COLLECTION_NAME)
+                    .document(id)
+                    .collection(COLLECTION_PARKING)
+                    .add(parking)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "Document added with ID : " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "Error adding document to the store " + e);
+                        }
+                    });
+
+        } catch (Exception ex) {
+            Log.e(TAG, ex.toString());
+            Log.e(TAG, ex.getLocalizedMessage());
+        }
+    }
+
+    public void getParkingInformation(String userId, String parkingId) {
+        try {
+//            db.collection(COLLECTION_NAME)
+//                    .document(userId)
+//                    .collection(COLLECTION_PARKING)
+//                    .document(parkingId)
+//                    .get()
+//
+        } catch (Exception ex) {
+
+        }
+    }
+
+    public void deleteParkingFromUser(String userId, String parkingId) {
+        try {
+            db.collection(COLLECTION_NAME)
+                    .document(userId)
+                    .collection(COLLECTION_PARKING)
+                    .document(parkingId)
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+        } catch (Exception ex) {
+
+        }
+    }
 
 }

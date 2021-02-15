@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".activites.ui.AddParking.AddParkingFragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Building Code"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/addBuildingCode"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:hint="Please enter building code"
+        android:inputType="text"
+        android:maxLength="5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="No of hours :"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/addHours"
+            android:layout_width="200dp"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Car Plate Number:"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/addPlateNumber"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:hint="Please enter plate number"
+        android:inputType="text"
+        android:maxLength="8" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Suite No. :"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/addSuiteNo"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:hint="Please enter suite number"
+        android:inputType="text"
+        android:maxLength="5" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Parking Location"
+        android:textSize="20sp" />
+
+    <CheckBox
+        android:id="@+id/addMyLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="Please use my location" />
+
+    <EditText
+        android:id="@+id/addParkingLocation"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:hint="Please enter parking location"
+        android:inputType="text"
+        android:maxLength="5" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Parking time"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/addParkingTime"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:hint="Please enter building code"
+        android:inputType="text"
+        android:maxLength="5" />
+
+
+    <Button
+        android:id="@+id/addNewParkingBtn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="#A4F2A4"
+        android:text="Save Parking"
+        android:textColor="#fff"
+        android:textSize="25dp" />
+</LinearLayout>

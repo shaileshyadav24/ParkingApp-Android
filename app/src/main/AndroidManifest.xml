@@ -13,20 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activites.DashboardActivity"></activity>
-        <activity android:name=".activites.RegistrationActivity" >
+        <activity
+            android:name=".activites.HomePageActivity">
+
+        </activity>
+        <activity android:name=".activites.DashboardActivity" />
+        <activity android:name=".activites.RegistrationActivity">
+
+        </activity>
+        <activity android:name=".activites.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activites.LoginActivity">
-        </activity>
-        <activity android:name=".activites.MainActivity">
-
-        </activity>
+        <activity android:name=".activites.MainActivity"></activity>
     </application>
 
 </manifest>

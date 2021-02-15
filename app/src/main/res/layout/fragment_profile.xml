@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".activites.ui.Profile.ProfileFragment">
+
+    <TextView
+        android:id="@+id/nameOfUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/emailOfUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/phoneNumberOfUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/carPlateNoOfUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/updateProfile"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="#A4F2A4"
+        android:text="Update Profile"
+        android:textColor="#fff"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/updatePassword"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="#A4F2A4"
+        android:text="Update Password"
+        android:textColor="#fff"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/deleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="#A4F2A4"
+        android:text="Delete Account"
+        android:textColor="#fff"
+        android:textSize="25dp" />
+    <Button
+        android:id="@+id/signOut"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:background="#A4F2A4"
+        android:text="Logout"
+        android:textColor="#fff"
+        android:textSize="25dp" />
+
+
+</LinearLayout>
