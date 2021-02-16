@@ -1,6 +1,7 @@
 package com.example.parkingapp.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.parkingapp.R;
+import com.example.parkingapp.activites.ui.SavedParking.OnClickListener;
 import com.example.parkingapp.activites.ui.SavedParking.OnLongClickListener;
 import com.example.parkingapp.model.Parking;
 
@@ -21,12 +23,14 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.Checklis
     private Context context;
     private ArrayList<Parking> parkingList;
     private OnLongClickListener onLongClickListener;
+    private OnClickListener onClickListener;
 
 
-    public ParkingAdapter(Context context, ArrayList<Parking> checklists, OnLongClickListener onLongClickListener) {
+    public ParkingAdapter(Context context, ArrayList<Parking> checklists, OnLongClickListener onLongClickListener, OnClickListener onClickListener) {
         this.context = context;
         this.parkingList = checklists;
         this.onLongClickListener = onLongClickListener;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -39,7 +43,7 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.Checklis
 
     @Override
     public void onBindViewHolder(@NonNull ChecklistViewHolder holder, int position) {
-        holder.bind(parkingList.get(position), this.onLongClickListener);
+        holder.bind(parkingList.get(position), this.onLongClickListener, this.onClickListener);
     }
 
     @Override
@@ -65,12 +69,13 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.Checklis
             layout = itemView.findViewById(R.id.parkingLayout);
         }
 
-        public void bind(Parking parking, OnLongClickListener onLongClickListener) {
-            carPlate.setText(parking.getPlateNumber());
-            time.setText(parking.getTime());
-            building.setText(parking.getBuildingCode());
-            suite.setText(parking.getSuiteNo());
-            hours.setText(parking.getHours());
+        public void bind(Parking parking, OnLongClickListener onLongClickListener, OnClickListener onClickListener) {
+            carPlate.setText("Plate: " + parking.getPlateNumber());
+            Log.e("TIME", parking.getTime());
+            time.setText("Time: " + parking.getTime());
+            building.setText("Building: " + parking.getBuildingCode());
+            suite.setText("Suite: " + parking.getSuiteNo());
+            hours.setText("Hours: " + parking.getHours());
 
             layout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -79,6 +84,14 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.Checklis
                     return false;
                 }
             });
+
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickListener.onClickListener(parking);
+                }
+            });
+
         }
 
 

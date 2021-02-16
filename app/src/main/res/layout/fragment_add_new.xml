@@ -7,10 +7,10 @@
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".activites.ui.AddParking.AddParkingFragment">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:text="Building Code"
         android:textSize="20sp" />
 
@@ -25,7 +25,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <TextView
@@ -44,7 +44,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Car Plate Number:"
         android:textSize="20sp" />
 
@@ -59,7 +59,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Suite No. :"
         android:textSize="20sp" />
 
@@ -74,7 +74,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Parking Location"
         android:textSize="20sp" />
 
@@ -90,30 +90,49 @@
         android:layout_width="match_parent"
         android:layout_height="40sp"
         android:hint="Please enter parking location"
-        android:inputType="text"
-        android:maxLength="5" />
+        android:inputType="text" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="Parking time"
         android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/addParkingTime"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:hint="Please enter building code"
-        android:inputType="text"
-        android:maxLength="5" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/addParkingTime"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/parkingTimeSelectionBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select time" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/addErrorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:textSize="15dp"
+        android:visibility="gone" />
 
 
     <Button
         android:id="@+id/addNewParkingBtn"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:background="#A4F2A4"
         android:text="Save Parking"
         android:textColor="#fff"

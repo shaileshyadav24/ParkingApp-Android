@@ -1,6 +1,7 @@
 package com.example.parkingapp.model;
 
 public class Parking {
+    String id = "";
     String buildingCode;
     String hours;
     String plateNumber;
@@ -28,6 +29,15 @@ public class Parking {
         this.latitude = "";
         this.longitude = "";
         this.time = "";
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getBuildingCode() {

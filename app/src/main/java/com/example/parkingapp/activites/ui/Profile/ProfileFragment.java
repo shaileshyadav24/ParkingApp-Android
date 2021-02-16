@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -94,12 +95,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         userViewModel.getUserRepository().statusOfDeleteAccount.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if(s != null) {
-                    if(s.contentEquals("SUCCESS")) {
+                if (s != null) {
+                    if (s.contentEquals("SUCCESS")) {
                         Toast.makeText(getContext(), "Account deleted successfully", Toast.LENGTH_SHORT).show();
-                        ((HomePageActivity) getContext()).initiateLogout();
+                        ((HomePageActivity) getActivity()).initiateLogout();
                     } else {
-                        errorMessage.setText("Please fill password");
+                        errorMessage.setText(s);
                         errorMessage.setTextColor(Color.RED);
                         errorMessage.setVisibility(View.VISIBLE);
                     }
@@ -165,7 +166,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onChanged(String s) {
                 if (s != null) {
                     if (s.contentEquals("SUCCESS")) {
-                        errorMessage.setText("Profile update successfull");
+                        errorMessage.setText("Password update successfull");
                         errorMessage.setTextColor(Color.GREEN);
                         errorMessage.setVisibility(View.VISIBLE);
                     } else {
@@ -194,16 +195,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             if (password.getText().toString().length() >= 6 &&
                                     newPassword.getText().toString().length() >= 6) {
 
-                                if (password.getText().toString().contentEquals(newPassword.getText().toString())) {
 
-                                    userViewModel.updatePasswordOfUser(password.getText().toString(),
-                                            newPassword.getText().toString(),
-                                            loggedInUser.getEmail());
-                                } else {
-                                    errorMessage.setText("Password does not match");
-                                    errorMessage.setTextColor(Color.RED);
-                                    errorMessage.setVisibility(View.VISIBLE);
-                                }
+                                userViewModel.updatePasswordOfUser(password.getText().toString(),
+                                        newPassword.getText().toString(),
+                                        loggedInUser.getEmail());
 
 
                             } else {
@@ -286,13 +281,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 !email.getText().toString().isEmpty() &&
                                 !plate.getText().toString().isEmpty() &&
                                 !phone.getText().toString().isEmpty()) {
-                            User updatedUser = new User(
-                                    name.getText().toString(),
-                                    email.getText().toString(),
-                                    phone.getText().toString(),
-                                    plate.getText().toString()
-                            );
-                            userViewModel.updateUserProfile(updatedUser);
+
+                            if (plate.getText().toString().length() < 2 || plate.getText().toString().length() > 8) {
+                                errorMessage.setText("Car plate number should be between 2 to 8 characters.");
+                                errorMessage.setTextColor(Color.RED);
+                                errorMessage.setVisibility(View.VISIBLE);
+                            } else {
+                                User updatedUser = new User(
+                                        name.getText().toString(),
+                                        email.getText().toString(),
+                                        phone.getText().toString(),
+                                        plate.getText().toString()
+                                );
+                                userViewModel.updateUserProfile(updatedUser);
+                            }
                         } else {
                             errorMessage.setText("Please fill all details");
                             errorMessage.setTextColor(Color.RED);
@@ -325,7 +327,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     break;
 
                 case R.id.signOut:
-                    ((HomePageActivity) getContext()).initiateLogout();
+                    ((HomePageActivity) getActivity()).initiateLogout();
                     break;
             }
         }

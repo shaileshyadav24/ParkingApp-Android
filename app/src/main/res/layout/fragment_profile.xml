@@ -12,35 +12,39 @@
         android:id="@+id/nameOfUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp" />
+        android:textColor="#000"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/emailOfUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textSize="30sp" />
+        android:textColor="#000"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/phoneNumberOfUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textSize="30sp" />
+        android:textColor="#000"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/carPlateNoOfUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textSize="30sp" />
+        android:textColor="#000"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/updateProfile"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
-        android:background="#A4F2A4"
+        android:background="#FF8C00"
         android:text="Update Profile"
         android:textColor="#fff"
         android:textSize="25dp" />
@@ -50,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
-        android:background="#A4F2A4"
+        android:background="#FFC107"
         android:text="Update Password"
         android:textColor="#fff"
         android:textSize="25dp" />
@@ -60,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
-        android:background="#A4F2A4"
+        android:background="#ff0000"
         android:text="Delete Account"
         android:textColor="#fff"
         android:textSize="25dp" />
@@ -69,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
-        android:background="#A4F2A4"
+        android:background="#000"
         android:text="Logout"
         android:textColor="#fff"
         android:textSize="25dp" />

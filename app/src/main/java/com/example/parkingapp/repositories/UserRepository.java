@@ -120,7 +120,7 @@ public class UserRepository {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d(TAG, document.getId() + "---" + document.getData());
-                                    userId.postValue(task.getResult().getDocuments().get(0).getId());
+                                    userId.setValue(task.getResult().getDocuments().get(0).getId());
                                     profileInfo.setValue(
                                             new User(
                                                     task.getResult().getDocuments().get(0).get("name").toString(),
@@ -288,6 +288,7 @@ public class UserRepository {
         statusOfDeleteAccount.postValue(null);
         statusOfUpdatePassword.postValue(null);
         statusOfUpdateProfile.postValue(null);
+        signInStatus.postValue(null);
         userId.postValue(null);
     }
 }

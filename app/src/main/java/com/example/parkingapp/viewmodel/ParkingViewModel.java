@@ -16,8 +16,12 @@ public class ParkingViewModel {
     private ParkingViewModel() {
     }
 
-    public ParkingRepository getUserRepository() {
+    public ParkingRepository getParkingRepository() {
         return this.parkingRepository;
+    }
+
+    public void getAllParkingList(String id) {
+        parkingRepository.getAllParkingList(id);
     }
 
     public void addNewParking(String userId, Parking parking){

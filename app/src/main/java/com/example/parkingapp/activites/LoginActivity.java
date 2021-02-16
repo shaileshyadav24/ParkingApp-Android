@@ -54,20 +54,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         this.userViewModel.getUserRepository().signInStatus.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if (s.equals("SUCCESS")) {
-                    goToDashboard();
-                } else {
-                    errorMessage.setVisibility(View.VISIBLE);
-                    errorMessage.setText(s);
+                if (s != null) {
+                    if (s.equals("SUCCESS")) {
+                        goToDashboard();
+                    } else {
+                        errorMessage.setVisibility(View.VISIBLE);
+                        errorMessage.setText(s);
+                    }
                 }
             }
         });
     }
 
     public void goToDashboard() {
-        if(rememberMe.isChecked()) {
+        if (rememberMe.isChecked()) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putString("email", emailAddress.getText().toString());
+            editor.apply();
         }
         Intent makeIntent = new Intent(this, HomePageActivity.class);
         makeIntent.putExtra("email", emailAddress.getText().toString());

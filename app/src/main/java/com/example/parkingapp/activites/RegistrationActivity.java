@@ -75,6 +75,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 !registerCarPlateNo.getText().toString().isEmpty()) {
 
 
+            if (registerCarPlateNo.getText().toString().length() < 2 || registerCarPlateNo.getText().toString().length() > 8) {
+                errorMessageRenderer("Car plate number should be between 2 to 8 characters.");
+                return true;
+            }
+
             if (registerPassword.getText().toString().length() >= 6) {
 
                 if (registerPassword.getText().toString().contentEquals(registerConfirmPassword.getText().toString())) {

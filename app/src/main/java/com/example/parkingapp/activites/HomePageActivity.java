@@ -3,8 +3,10 @@ package com.example.parkingapp.activites;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.parkingapp.R;
+import com.example.parkingapp.manager.LocationManager;
 import com.example.parkingapp.viewmodel.UserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -18,6 +20,7 @@ import androidx.navigation.ui.NavigationUI;
 public class HomePageActivity extends AppCompatActivity  {
 
     private UserViewModel userViewModel;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,9 @@ public class HomePageActivity extends AppCompatActivity  {
         String loggedInEmail = intent.getStringExtra("email");
 
         userViewModel = UserViewModel.getInstance();
+
+        this.locationManager = LocationManager.getInstance();
+        this.locationManager.checkPermissions(this);
 
         if(loggedInEmail != null) {
             userViewModel.searchUserByEmail(loggedInEmail);
@@ -45,12 +51,7 @@ public class HomePageActivity extends AppCompatActivity  {
     }
 
     public void initializeBottomTabBar() {
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
-
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
@@ -65,7 +66,7 @@ public class HomePageActivity extends AppCompatActivity  {
         editor.remove("email");
         editor.commit();
         userViewModel.getUserRepository().logoutUser();
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
