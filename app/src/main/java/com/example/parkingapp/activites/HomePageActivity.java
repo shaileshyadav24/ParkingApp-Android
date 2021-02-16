@@ -64,6 +64,7 @@ public class HomePageActivity extends AppCompatActivity  {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("email");
         editor.commit();
+        userViewModel.getUserRepository().logoutUser();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

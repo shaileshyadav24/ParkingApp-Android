@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -37,6 +38,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Button updatePassword;
     private Button deleteAccount;
     private Button logout;
+
     private User loggedInUser;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,6 +64,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         logout = root.findViewById(R.id.signOut);
         logout.setOnClickListener(this);
 
+
         userViewModel.getUserRepository().profileInfo.observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
@@ -83,23 +86,49 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.layout_delete_profile, null);
 
+
+        EditText password = dialogView.findViewById(R.id.deleteConfirmPassword);
+        TextView errorMessage = dialogView.findViewById(R.id.deleteProfileError);
+        errorMessage.setVisibility(View.GONE);
+
+        userViewModel.getUserRepository().statusOfDeleteAccount.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s != null) {
+                    if(s.contentEquals("SUCCESS")) {
+                        Toast.makeText(getContext(), "Account deleted successfully", Toast.LENGTH_SHORT).show();
+                        ((HomePageActivity) getContext()).initiateLogout();
+                    } else {
+                        errorMessage.setText("Please fill password");
+                        errorMessage.setTextColor(Color.RED);
+                        errorMessage.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
+
         AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                 .setTitle("Delete Profile")
+                .setMessage("Are you sure want to delete your account? No account information will be available.")
                 .setView(dialogView)
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Delete", null)
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        EditText password = dialogView.findViewById(R.id.deleteConfirmPassword);
-                        TextView errorMessage = dialogView.findViewById(R.id.deleteProfileError);
-
+                    public void onClick(View view) {
                         errorMessage.setVisibility(View.GONE);
 
                         if (!password.getText().toString().isEmpty()) {
-                            errorMessage.setText("Profile delete successfull");
-                            errorMessage.setTextColor(Color.GREEN);
-                            errorMessage.setVisibility(View.VISIBLE);
-
+                            userViewModel.deleteUser(loggedInUser.getEmail(), password.getText().toString());
                         } else {
                             errorMessage.setText("Please fill password");
                             errorMessage.setTextColor(Color.RED);
@@ -107,16 +136,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         }
 
                     }
-                })
-                .setNegativeButton("Cancel", null)
-                .create();
+                });
+            }
+        });
+
         alertDialog.show();
     }
 
     public void initiateUpdatePassword() {
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.layout_update_password, null);
-        
+
         EditText password = dialogView.findViewById(R.id.passwordCurrent);
         EditText newPassword = dialogView.findViewById(R.id.passwordNew);
         TextView errorMessage = dialogView.findViewById(R.id.passwordError);
@@ -128,6 +158,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 .setPositiveButton("Update", null)
                 .setNegativeButton("Cancel", null)
                 .create();
+
+
+        userViewModel.getUserRepository().statusOfUpdatePassword.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    if (s.contentEquals("SUCCESS")) {
+                        errorMessage.setText("Profile update successfull");
+                        errorMessage.setTextColor(Color.GREEN);
+                        errorMessage.setVisibility(View.VISIBLE);
+                    } else {
+                        errorMessage.setText(s);
+                        errorMessage.setTextColor(Color.RED);
+                        errorMessage.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
 
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -147,9 +195,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                     newPassword.getText().toString().length() >= 6) {
 
                                 if (password.getText().toString().contentEquals(newPassword.getText().toString())) {
-                                    errorMessage.setText("Profile update successfull");
-                                    errorMessage.setTextColor(Color.GREEN);
-                                    errorMessage.setVisibility(View.VISIBLE);
+
+                                    userViewModel.updatePasswordOfUser(password.getText().toString(),
+                                            newPassword.getText().toString(),
+                                            loggedInUser.getEmail());
                                 } else {
                                     errorMessage.setText("Password does not match");
                                     errorMessage.setTextColor(Color.RED);
@@ -196,6 +245,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         phone.setText(this.loggedInUser.getContactNumber());
         errorMessage.setVisibility(View.GONE);
 
+
+        userViewModel.getUserRepository().statusOfUpdateProfile.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    if (s.contentEquals("SUCCESS")) {
+                        errorMessage.setText("Profile update successfull");
+                        errorMessage.setTextColor(Color.GREEN);
+                        errorMessage.setVisibility(View.VISIBLE);
+                        userViewModel.searchUserByEmail(email.getText().toString());
+                    } else {
+                        errorMessage.setText(s);
+                        errorMessage.setTextColor(Color.RED);
+                        errorMessage.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
         AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                 .setTitle("Update Profile")
                 .setView(dialogView)
@@ -218,17 +286,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 !email.getText().toString().isEmpty() &&
                                 !plate.getText().toString().isEmpty() &&
                                 !phone.getText().toString().isEmpty()) {
-                            errorMessage.setText("Profile update successfull");
-                            errorMessage.setTextColor(Color.GREEN);
-                            errorMessage.setVisibility(View.VISIBLE);
-
+                            User updatedUser = new User(
+                                    name.getText().toString(),
+                                    email.getText().toString(),
+                                    phone.getText().toString(),
+                                    plate.getText().toString()
+                            );
+                            userViewModel.updateUserProfile(updatedUser);
                         } else {
                             errorMessage.setText("Please fill all details");
                             errorMessage.setTextColor(Color.RED);
                             errorMessage.setVisibility(View.VISIBLE);
                         }
-                        //Dismiss once everything is OK.
-//                        dialog.dismiss();
                     }
                 });
 
@@ -256,7 +325,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     break;
 
                 case R.id.signOut:
-//                    ((HomePageActivity) context)initiateLogout();
+                    ((HomePageActivity) getContext()).initiateLogout();
                     break;
             }
         }

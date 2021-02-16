@@ -10,8 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.*;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -25,6 +24,9 @@ public class UserRepository {
     public MutableLiveData<String> userId = new MutableLiveData<String>();
     public MutableLiveData<User> profileInfo = new MutableLiveData<User>();
     public MutableLiveData<String> statusOfRegistration = new MutableLiveData<>();
+    public MutableLiveData<String> statusOfUpdateProfile = new MutableLiveData<>();
+    public MutableLiveData<String> statusOfUpdatePassword = new MutableLiveData<>();
+    public MutableLiveData<String> statusOfDeleteAccount = new MutableLiveData<>();
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -119,7 +121,6 @@ public class UserRepository {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d(TAG, document.getId() + "---" + document.getData());
                                     userId.postValue(task.getResult().getDocuments().get(0).getId());
-//                                    String name, String email, String contactNumber, String carPlateNumber
                                     profileInfo.setValue(
                                             new User(
                                                     task.getResult().getDocuments().get(0).get("name").toString(),
@@ -137,5 +138,156 @@ public class UserRepository {
             Log.e(TAG, ex.toString());
             Log.e(TAG, ex.getLocalizedMessage());
         }
+    }
+
+    public void updateUserInfo(User user) {
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        try {
+            fUser.updateEmail(user.getEmail())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            updateUserInfoInDb(userId.getValue(), user);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            statusOfUpdateProfile.postValue(e.getLocalizedMessage());
+                        }
+                    });
+        } catch (Exception ex) {
+            statusOfUpdateProfile.postValue(ex.getLocalizedMessage());
+        }
+    }
+
+    private void updateUserInfoInDb(String userId, User user) {
+        try {
+            db.collection(COLLECTION_NAME)
+                    .document(userId)
+                    .set(user)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            statusOfUpdateProfile.postValue("SUCCESS");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            statusOfUpdateProfile.postValue(e.getLocalizedMessage());
+                        }
+                    });
+        } catch (Exception ex) {
+            statusOfUpdateProfile.postValue(ex.getLocalizedMessage());
+        }
+    }
+
+
+    public void updatePasswordOfUser(String password, String newPassword, String email) {
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        AuthCredential credential = EmailAuthProvider
+                .getCredential(email, password);
+
+        try {
+            fUser.reauthenticate(credential)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            try {
+                                fUser.updatePassword(newPassword)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                statusOfUpdatePassword.postValue("SUCCESS");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                statusOfUpdatePassword.postValue(e.getLocalizedMessage());
+                                            }
+                                        });
+                            } catch (Exception ex) {
+                                statusOfUpdatePassword.postValue(ex.getLocalizedMessage());
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            statusOfUpdatePassword.postValue(e.getLocalizedMessage());
+                        }
+                    });
+        } catch (Exception ex) {
+            statusOfUpdatePassword.postValue(ex.getLocalizedMessage());
+        }
+    }
+
+
+    public void deleteUserAccount(String email, String password) {
+        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        AuthCredential credential = EmailAuthProvider
+                .getCredential(email, password);
+
+        try {
+            fUser.reauthenticate(credential)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            try {
+                                fUser.delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                try {
+                                                    db.collection(COLLECTION_NAME)
+                                                            .document(userId.getValue())
+                                                            .delete()
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    statusOfDeleteAccount.postValue("SUCCESS");
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception ex) {
+                                                                    statusOfDeleteAccount.postValue(ex.getLocalizedMessage());
+                                                                }
+                                                            });
+                                                } catch (Exception ex) {
+                                                    statusOfDeleteAccount.postValue(ex.getLocalizedMessage());
+                                                }
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception ex) {
+                                                statusOfDeleteAccount.postValue(ex.getLocalizedMessage());
+                                            }
+                                        });
+                            } catch (Exception ex) {
+                                statusOfDeleteAccount.postValue(ex.getLocalizedMessage());
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception ex) {
+                            statusOfDeleteAccount.postValue(ex.getLocalizedMessage());
+                        }
+                    });
+        } catch (Exception ex) {
+            statusOfDeleteAccount.postValue(ex.getLocalizedMessage());
+        }
+
+    }
+
+    public void logoutUser() {
+        statusOfDeleteAccount.postValue(null);
+        statusOfUpdatePassword.postValue(null);
+        statusOfUpdateProfile.postValue(null);
+        userId.postValue(null);
     }
 }

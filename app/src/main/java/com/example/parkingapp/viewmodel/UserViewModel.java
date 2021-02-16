@@ -30,4 +30,16 @@ public class UserViewModel {
     public void searchUserByEmail(String email) {
         userRepository.getUser(email);
     }
+
+    public void updateUserProfile(User user) {
+        userRepository.updateUserInfo(user);
+    }
+
+    public void updatePasswordOfUser(String password, String newPassword, String email) {
+        userRepository.updatePasswordOfUser(password, newPassword, email);
+    }
+
+    public void deleteUser(String email, String password) {
+        userRepository.deleteUserAccount(email, password);
+    }
 }
