@@ -1,16 +1,20 @@
 package com.example.parkingapp.activites.ui.Profile;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
@@ -33,6 +37,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Button updatePassword;
     private Button deleteAccount;
     private Button logout;
+    private User loggedInUser;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,11 +65,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         userViewModel.getUserRepository().profileInfo.observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                if(user.getName() != null) {
-                    nameOfUser.setText("Name: "+ user.getName());
-                    emailOfUser.setText("Email: "+ user.getEmail());
-                    carPlateNo.setText("Car Plate Number: "+ user.getCarPlateNumber());
-                    contactNo.setText("Contact Number: "+ user.getContactNumber());
+                if (user.getName() != null) {
+                    nameOfUser.setText("Name: " + user.getName());
+                    emailOfUser.setText("Email: " + user.getEmail());
+                    carPlateNo.setText("Car Plate Number: " + user.getCarPlateNumber());
+                    contactNo.setText("Contact Number: " + user.getContactNumber());
+                    loggedInUser = user;
                 }
             }
         });
@@ -74,20 +80,168 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initiateDeleteAccount() {
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.layout_delete_profile, null);
 
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle("Delete Profile")
+                .setView(dialogView)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        EditText password = dialogView.findViewById(R.id.deleteConfirmPassword);
+                        TextView errorMessage = dialogView.findViewById(R.id.deleteProfileError);
+
+                        errorMessage.setVisibility(View.GONE);
+
+                        if (!password.getText().toString().isEmpty()) {
+                            errorMessage.setText("Profile delete successfull");
+                            errorMessage.setTextColor(Color.GREEN);
+                            errorMessage.setVisibility(View.VISIBLE);
+
+                        } else {
+                            errorMessage.setText("Please fill password");
+                            errorMessage.setTextColor(Color.RED);
+                            errorMessage.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        alertDialog.show();
     }
 
     public void initiateUpdatePassword() {
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.layout_update_password, null);
+        
+        EditText password = dialogView.findViewById(R.id.passwordCurrent);
+        EditText newPassword = dialogView.findViewById(R.id.passwordNew);
+        TextView errorMessage = dialogView.findViewById(R.id.passwordError);
+        errorMessage.setVisibility(View.GONE);
 
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle("Update Password")
+                .setView(dialogView)
+                .setPositiveButton("Update", null)
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        errorMessage.setVisibility(View.GONE);
+                        if (!password.getText().toString().isEmpty() &&
+                                !newPassword.getText().toString().isEmpty()) {
+
+
+                            if (password.getText().toString().length() >= 6 &&
+                                    newPassword.getText().toString().length() >= 6) {
+
+                                if (password.getText().toString().contentEquals(newPassword.getText().toString())) {
+                                    errorMessage.setText("Profile update successfull");
+                                    errorMessage.setTextColor(Color.GREEN);
+                                    errorMessage.setVisibility(View.VISIBLE);
+                                } else {
+                                    errorMessage.setText("Password does not match");
+                                    errorMessage.setTextColor(Color.RED);
+                                    errorMessage.setVisibility(View.VISIBLE);
+                                }
+
+
+                            } else {
+                                errorMessage.setText("Password length should be more than or equal to 6");
+                                errorMessage.setTextColor(Color.RED);
+                                errorMessage.setVisibility(View.VISIBLE);
+
+                            }
+
+                        } else {
+                            errorMessage.setText("Please fill all details");
+                            errorMessage.setTextColor(Color.RED);
+                            errorMessage.setVisibility(View.VISIBLE);
+
+                        }
+
+                    }
+                });
+
+            }
+        });
+
+        alertDialog.show();
     }
 
     public void initiateUpdateProfile() {
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.layout_update_profile, null);
+
+        EditText name = dialogView.findViewById(R.id.profileName);
+        EditText email = dialogView.findViewById(R.id.profileEmail);
+        EditText plate = dialogView.findViewById(R.id.profilePlate);
+        EditText phone = dialogView.findViewById(R.id.profilePhone);
+        TextView errorMessage = dialogView.findViewById(R.id.profileError);
+
+        name.setText(this.loggedInUser.getName());
+        email.setText(this.loggedInUser.getEmail());
+        plate.setText(this.loggedInUser.getCarPlateNumber());
+        phone.setText(this.loggedInUser.getContactNumber());
+        errorMessage.setVisibility(View.GONE);
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle("Update Profile")
+                .setView(dialogView)
+                .setPositiveButton("Update", null)
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        errorMessage.setVisibility(View.GONE);
+
+                        if (!name.getText().toString().isEmpty() &&
+                                !email.getText().toString().isEmpty() &&
+                                !plate.getText().toString().isEmpty() &&
+                                !phone.getText().toString().isEmpty()) {
+                            errorMessage.setText("Profile update successfull");
+                            errorMessage.setTextColor(Color.GREEN);
+                            errorMessage.setVisibility(View.VISIBLE);
+
+                        } else {
+                            errorMessage.setText("Please fill all details");
+                            errorMessage.setTextColor(Color.RED);
+                            errorMessage.setVisibility(View.VISIBLE);
+                        }
+                        //Dismiss once everything is OK.
+//                        dialog.dismiss();
+                    }
+                });
+
+            }
+        });
+
+        alertDialog.show();
 
     }
 
     @Override
     public void onClick(View view) {
-        if(view != null) {
+        if (view != null) {
             switch (view.getId()) {
                 case R.id.updateProfile:
                     initiateUpdateProfile();
