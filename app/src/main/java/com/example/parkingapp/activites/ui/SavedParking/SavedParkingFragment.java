@@ -1,3 +1,5 @@
+// Created by Shailesh Yadav 101332535
+
 package com.example.parkingapp.activites.ui.SavedParking;
 
 import android.os.Bundle;
@@ -76,7 +78,8 @@ public class SavedParkingFragment extends Fragment implements OnLongClickListene
 
     @Override
     public void onLongClickListener(Parking parking) {
-
+        parkingViewModel.deleteParking(userViewModel.getUserRepository().userId.getValue(), parking.getId());
+        parkings.remove(parking);
     }
 
     @Override

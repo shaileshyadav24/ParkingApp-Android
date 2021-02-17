@@ -1,3 +1,4 @@
+// Created by Shailesh Yadav 101332535
 package com.example.parkingapp.adapter;
 
 import android.content.Context;
@@ -70,7 +71,6 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.Parkingi
 
         public void bind(Parking parking, OnLongClickListener onLongClickListener, OnClickListener onClickListener) {
             carPlate.setText("" + parking.getPlateNumber());
-            Log.e("TIME", parking.getPlateNumber());
             time.setText("Time: " + parking.getTime());
             building.setText("Building: " + parking.getBuildingCode());
             suite.setText("Suite: " + parking.getSuiteNo());
