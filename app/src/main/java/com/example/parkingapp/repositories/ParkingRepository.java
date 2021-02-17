@@ -8,14 +8,17 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.parkingapp.model.Parking;
 import com.example.parkingapp.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class ParkingRepository {
     public MutableLiveData<String> parkingStatus = new MutableLiveData<>();
     public MutableLiveData<String> deleteParking = new MutableLiveData<>();
     public MutableLiveData<ArrayList<Parking>> parkingList = new MutableLiveData<>();
+    public MutableLiveData<Parking> parkingInfo = new MutableLiveData<Parking>();
 
     public ParkingRepository() {
         this.db = FirebaseFirestore.getInstance();
@@ -108,16 +112,16 @@ public class ParkingRepository {
     }
 
     public void getParkingInformation(String userId, String parkingId) {
-        try {
+//        try {
 //            db.collection(COLLECTION_NAME)
 //                    .document(userId)
 //                    .collection(COLLECTION_PARKING)
 //                    .document(parkingId)
-//                    .get()
-//
-        } catch (Exception ex) {
-
-        }
+//                    .
+//        } catch (Exception ex) {
+//            Log.e(TAG, ex.toString());
+//            Log.e(TAG, ex.getLocalizedMessage());
+//        }
     }
 
     public void deleteParkingFromUser(String userId, String parkingId) {

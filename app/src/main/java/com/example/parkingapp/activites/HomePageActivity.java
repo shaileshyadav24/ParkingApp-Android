@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.parkingapp.R;
 import com.example.parkingapp.manager.LocationManager;
+import com.example.parkingapp.model.Parking;
 import com.example.parkingapp.viewmodel.UserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -17,7 +18,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class HomePageActivity extends AppCompatActivity  {
+import java.io.Serializable;
+
+public class HomePageActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
     private LocationManager locationManager;
@@ -35,14 +38,14 @@ public class HomePageActivity extends AppCompatActivity  {
         this.locationManager = LocationManager.getInstance();
         this.locationManager.checkPermissions(this);
 
-        if(loggedInEmail != null) {
+        if (loggedInEmail != null) {
             userViewModel.searchUserByEmail(loggedInEmail);
         }
 
         userViewModel.getUserRepository().userId.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                if(s != null) {
+                if (s != null) {
                     initializeBottomTabBar();
                 }
             }
@@ -58,6 +61,12 @@ public class HomePageActivity extends AppCompatActivity  {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    public void showMap(Parking parking) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("parking", parking);
+        startActivity(intent);
     }
 
     public void initiateLogout() {

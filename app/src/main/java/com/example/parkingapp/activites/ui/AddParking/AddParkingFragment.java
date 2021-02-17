@@ -90,9 +90,9 @@ public class AddParkingFragment extends Fragment implements View.OnClickListener
         userViewModel.getUserRepository().profileInfo.observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                if(user.getCarPlateNumber() != null) {
-                    carPlateNumber.setText(user.getCarPlateNumber());
-                }
+//                if (user.getCarPlateNumber() != null) {
+//                    carPlateNumber.setText(user.getCarPlateNumber());
+//                }
             }
         });
 
@@ -200,8 +200,8 @@ public class AddParkingFragment extends Fragment implements View.OnClickListener
                         hoursSelected,
                         carPlateNumber.getText().toString(),
                         suiteNo.getText().toString(),
-                        String.valueOf(locationToSave.latitude),
-                        String.valueOf(locationToSave.longitude),
+                        locationToSave.latitude,
+                        locationToSave.longitude,
                         parkingTimeSelection.getText().toString()
                 );
                 parkingViewModel.addNewParking(userViewModel.getUserRepository().userId.getValue(),
@@ -228,7 +228,7 @@ public class AddParkingFragment extends Fragment implements View.OnClickListener
     }
 
     public void showSelectedTime(int hour, int min) {
-        parkingTimeSelection.setText((hour > 12 ? (hour - 12) : hour) + ":" + min + (hour > 12 ? "PM" : "AM"));
+        parkingTimeSelection.setText((hour > 12 ? (hour - 12) : hour) + ":" + (min < 10 ? ("0" + min) : min) + (hour > 12 ? " PM" : " AM"));
     }
 
     @Override

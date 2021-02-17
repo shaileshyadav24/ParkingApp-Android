@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +18,7 @@ import com.example.parkingapp.model.Parking;
 
 import java.util.ArrayList;
 
-public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.ChecklistViewHolder> {
+public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.ParkingistViewHolder> {
     private Context context;
     private ArrayList<Parking> parkingList;
     private OnLongClickListener onLongClickListener;
@@ -35,14 +34,14 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.Checklis
 
     @NonNull
     @Override
-    public ParkingAdapter.ChecklistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ParkingistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.parking_item, null, false);
-        return new ChecklistViewHolder(view);
+        return new ParkingistViewHolder(view);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull ChecklistViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ParkingistViewHolder holder, int position) {
         holder.bind(parkingList.get(position), this.onLongClickListener, this.onClickListener);
     }
 
@@ -51,7 +50,7 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.Checklis
         return parkingList.size();
     }
 
-    public static class ChecklistViewHolder extends RecyclerView.ViewHolder {
+    public static class ParkingistViewHolder extends RecyclerView.ViewHolder {
         TextView carPlate;
         TextView time;
         TextView building;
@@ -59,7 +58,7 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.Checklis
         TextView hours;
         LinearLayout layout;
 
-        public ChecklistViewHolder(@NonNull View itemView) {
+        public ParkingistViewHolder(@NonNull View itemView) {
             super(itemView);
             carPlate = itemView.findViewById(R.id.displayCarPlate);
             time = itemView.findViewById(R.id.displayTime);
@@ -70,8 +69,8 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.Checklis
         }
 
         public void bind(Parking parking, OnLongClickListener onLongClickListener, OnClickListener onClickListener) {
-            carPlate.setText("Plate: " + parking.getPlateNumber());
-            Log.e("TIME", parking.getTime());
+            carPlate.setText("" + parking.getPlateNumber());
+            Log.e("TIME", parking.getPlateNumber());
             time.setText("Time: " + parking.getTime());
             building.setText("Building: " + parking.getBuildingCode());
             suite.setText("Suite: " + parking.getSuiteNo());

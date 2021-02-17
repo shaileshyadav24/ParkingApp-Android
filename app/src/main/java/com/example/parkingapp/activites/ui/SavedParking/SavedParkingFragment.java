@@ -17,16 +17,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.parkingapp.R;
+import com.example.parkingapp.activites.HomePageActivity;
 import com.example.parkingapp.adapter.ParkingAdapter;
 import com.example.parkingapp.model.Parking;
 import com.example.parkingapp.viewmodel.ParkingViewModel;
 import com.example.parkingapp.viewmodel.UserViewModel;
 import com.google.android.gms.maps.MapView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedParkingFragment extends Fragment implements OnLongClickListener, OnClickListener {
+public class SavedParkingFragment extends Fragment implements OnLongClickListener, OnClickListener, Serializable {
 
     private ParkingViewModel parkingViewModel;
     private UserViewModel userViewModel;
@@ -42,7 +44,6 @@ public class SavedParkingFragment extends Fragment implements OnLongClickListene
         userViewModel = UserViewModel.getInstance();
         userId = userViewModel.getUserRepository().userId.getValue();
         View root = inflater.inflate(R.layout.fragment_saved, container, false);
-        map = root.findViewById(R.id.mapsDisplay);
         recyclerView = root.findViewById(R.id.savedParkingList);
         parkings = new ArrayList<Parking>();
         parkingAdapter = new ParkingAdapter(getContext(), parkings, this, this);
@@ -63,6 +64,7 @@ public class SavedParkingFragment extends Fragment implements OnLongClickListene
             @Override
             public void onChanged(ArrayList<Parking> p) {
                 if (p != null) {
+                    parkings.clear();
                     parkings.addAll(p);
                     parkingAdapter.notifyDataSetChanged();
                 }
@@ -79,6 +81,6 @@ public class SavedParkingFragment extends Fragment implements OnLongClickListene
 
     @Override
     public void onClickListener(Parking parking) {
-
+        ((HomePageActivity) getActivity()).showMap(parking);
     }
 }

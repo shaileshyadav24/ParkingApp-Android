@@ -1,17 +1,19 @@
 package com.example.parkingapp.model;
 
-public class Parking {
+import java.io.Serializable;
+
+public class Parking  implements Serializable  {
     String id = "";
     String buildingCode;
     String hours;
     String plateNumber;
     String suiteNo;
-    String latitude;
-    String longitude;
+    Double latitude;
+    Double longitude;
     String time;
 
 
-    public Parking(String buildingCode, String hours, String plateNumber, String suiteNo, String latitude, String longitude, String time) {
+    public Parking(String buildingCode, String hours, String plateNumber, String suiteNo, Double latitude, Double longitude, String time) {
         this.buildingCode = buildingCode;
         this.hours = hours;
         this.plateNumber = plateNumber;
@@ -26,8 +28,8 @@ public class Parking {
         this.hours = "";
         this.plateNumber = "";
         this.suiteNo = "";
-        this.latitude = "";
-        this.longitude = "";
+        this.latitude = 0.0;
+        this.longitude = 0.0;
         this.time = "";
     }
 
@@ -72,19 +74,19 @@ public class Parking {
         this.suiteNo = suiteNo;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
