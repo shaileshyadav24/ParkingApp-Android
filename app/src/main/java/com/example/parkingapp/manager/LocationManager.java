@@ -73,7 +73,6 @@ public class LocationManager {
     public MutableLiveData<Location> getLastLocation(Context context) {
         if (this.locationPermissionGranted) {
             try {
-
                 this.getFusedLocationProviderClient(context)
                         .getLastLocation()
                         .addOnSuccessListener(new OnSuccessListener<Location>() {

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     tools:context=".activites.RegistrationActivity">
 
     <LinearLayout
@@ -16,14 +17,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:paddingTop="15dp"
+            android:paddingTop="5dp"
             android:id="@+id/returnToLogin"
             android:src="@drawable/baseline_keyboard_arrow_left_black_18dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="Registration"
             android:textSize="30dp" />
 
@@ -110,7 +111,7 @@
         android:id="@+id/registerPlateNo"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:hint="Please enter your car plate number"
         android:inputType="text" />
 
@@ -118,7 +119,7 @@
         android:id="@+id/errorMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:textColor="#F30707"
         android:visibility="gone" />
 
@@ -126,22 +127,10 @@
         android:id="@+id/registerUser"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="#A4F2A4"
         android:text="Register"
         android:textColor="#fff"
         android:textSize="25dp" />
-
-
-    <!--    <Button-->
-    <!--        android:id="@+id/returnToLogin"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="40dp"-->
-    <!--        android:layout_marginTop="15dp"-->
-    <!--        android:background="#FF8C00"-->
-    <!--        android:text="Return to login"-->
-    <!--        android:textColor="#fff"-->
-    <!--        android:textSize="25dp" />-->
-
 
 </LinearLayout>

@@ -90,9 +90,9 @@ public class AddParkingFragment extends Fragment implements View.OnClickListener
         userViewModel.getUserRepository().profileInfo.observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-//                if (user.getCarPlateNumber() != null) {
-//                    carPlateNumber.setText(user.getCarPlateNumber());
-//                }
+                if (user.getCarPlateNumber() != null) {
+                    carPlateNumber.setText(user.getCarPlateNumber());
+                }
             }
         });
 
@@ -133,11 +133,9 @@ public class AddParkingFragment extends Fragment implements View.OnClickListener
             locationCallback = new LocationCallback() {
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
-                    Log.e("TAG", "LOCATION RESULT AREA");
                     if (locationResult == null) {
                         return;
                     }
-                    Log.e("TAG", "INSIDE CALLBACK");
                     for (Location loc : locationResult.getLocations()) {
                         location = new LatLng(loc.getLatitude(), loc.getLongitude());
                         Log.e("TAG", "LOCATION FOUND 1: " + loc.getLongitude());
@@ -266,7 +264,6 @@ public class AddParkingFragment extends Fragment implements View.OnClickListener
             public void onChanged(Location loc) {
                 if (loc != null) {
                     location = new LatLng(loc.getLatitude(), loc.getLongitude());
-                    Log.e("TAG", "LOCATION FOUND: " + loc.getLongitude());
                 }
             }
         });
